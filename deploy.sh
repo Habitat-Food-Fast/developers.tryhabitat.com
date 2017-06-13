@@ -189,7 +189,6 @@ disable_expanded_output() {
     set -o verbose
   fi
 }
-
 set_user_id() {
   if [[ -z `git config user.name` ]]; then
     git config user.name "$default_username"
