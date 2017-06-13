@@ -12,7 +12,6 @@ var rename = require("gulp-rename");
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
-
 var del = require('del');
 var highlight = require('highlight.js');
 var marked = require('marked');
