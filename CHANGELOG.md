@@ -11,7 +11,6 @@ Documentation and example changes.
 *February 3, 2016*
 
 A small bugfix for slightly incorrect background colors on code samples in some cases.
-
 ## Version 1.3.1
 
 *January 31, 2016*
