@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
-set -o errexit #abort if any command fails
+#!/bin/bash
 rm -rf build; rm -rf build.zip; gulp; zip -r build build
