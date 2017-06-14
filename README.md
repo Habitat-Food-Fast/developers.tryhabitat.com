@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
 </p>
 
-<p align="center"><i>A Node.js port of <a href="https://github.com/lord/slate">lord/slate</a></i></p>
+<p align="center"><i>A Habitat-style Node.js port of <a href="https://github.com/lord/slate">lord/slate</a></i></p>
 
 <p align="center">Slate helps you create beautiful, intelligent, responsive API documentation.</p>
 
@@ -36,14 +36,14 @@ Getting Started with Slate
 
 You're going to need:
 
- - **Node.js**
+ - **node.js / npm**
 
 ### Getting Set Up
 
 1. Fork this repository on Github.
-2. Clone *your forked repository* (not our original one) to your hard drive with `git clone https://github.com/YOURUSERNAME/node-slate.git`
-3. `cd node-slate`
-4. Initialize and start Slate:
+2. Clone this project to your hard drive with `git clone https://github.com/mikepaszkiewicz/developers.tryhabitat.com.git`
+3. `cd developers.tryhabitat.com`
+4. Initialize and start Slate (only need all this for the first time):
 
 ```shell
 npm install
@@ -51,24 +51,17 @@ npm run build
 npm start
 ```
 
-You can now see the docs at http://localhost:4567. Whoa! That was fast!
-
-### Commands
-
-Compile documentation to static site in `./build`:
-
-```shell
-npm run build
-```
-
-Run a dev server that live-reloads at http://localhost:4567:
+You can now see the docs at http://localhost:4567. After the first time, all you need is: 
 
 ```shell
 npm start
 ```
 
-Publish your docs to `origin/gh-pages` branch:
+🔥🔥🔥🔥 Whoa! That was fast! 🔥🔥🔥🔥
 
-```shell
-npm run deploy
-```
+### Commands
+
+To compile documentation to static site in `./build`, just do a normal git commit. This will trigger gulp to run, converting the slate .md file into the actual website bundle. 
+
+To deploy to `developers.tryhabitat.com`, push to the master branch. Boom, done.
+
