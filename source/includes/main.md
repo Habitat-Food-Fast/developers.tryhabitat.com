@@ -1,79 +1,56 @@
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Habitat dispatching API! You can use our API to fetch information about delivery hours, vendors, menus, and send an order through our system
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We currently only have language bindings in shell, but keep an eye out for node, python, and java in the future! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'no_kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> To check the validity and permissions on your key, run the following code.
 
 ```bash
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl -X GET https://dispatch.tryhabitat.com/api/v1/ping \
+     -H 'cache-control: no-cache' \
+     -H 'Content-Type: application/json' \
+     -d '{"api_key": "YOUR_API_KEY"}'
 ```
 
-```javascript
-const kittn = require('kittn');
+> The response object will have your name and key:
 
-let api = kittn.authorize('meowmeowmeow');
+```json
+  {
+    "owner": "Bobby Cheese",
+    "key": "YOUR_API_KEY"
+  }
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+Habitat uses API keys to allow developer access. You can inquire about a Habitat API key at our [developer portal](http://example.com/developers).
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+Remember, you must replace <code>YOUR_API_KEY</code> with your personal API key.
 </aside>
 
-# Kittens
+# Zones
 
-## Get All Kittens
+Zones contain Habitat's delivery zones and hours
+<aside class="warning">
+This endpoint is experimental and subject to change
+</aside>
 
-```ruby
-require 'kittn'
+## GET Zones
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+### HTTP Request
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+`GET https://dispatch.tryhabitat.com/api/v1/zones`
 
 ```bash
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+curl "https://dispatch.tryhabitat/api/v1/zones"
+  -H 'cache-control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "api_key": "YOUR_API_KEY",
+    "zoneId": "zoneId"
+  }'
 ```
 
 > The above command returns JSON structured like this:
@@ -81,89 +58,49 @@ let kittens = api.kittens.get();
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+    "_id": 1,
+    "name": "Temple",
+    "open": true,
+    "bounds" : {
+        "type" : "geojson",
+        "data" : {
+            "type" : "Feature",
+            "properties" : {
+                "name" : "Temple"
+            },
+            "geometry" : {
+                "type" : "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      -75.16665458679199,
+                      39.97225278615979
+                    ],
+                    [
+                      -75.16867160797119,
+                      39.975377114288165
+                    ],
+                    [
+                      -75.16665458679199,
+                      39.97225278615979
+                    ]
+                  ]
+                ]
+            }
+        }
+    },
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
 ]
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves an array of all zones, or a single object if requested with zoneId.
 
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
+### Data Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+zoneId | false | (optional) If set to true, the result will return an array of zones.
 
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
 </aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```bash
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
